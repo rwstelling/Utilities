@@ -107,27 +107,21 @@ int main( void )
         FILE *fp;
         uint8_t buff[49];
 	struct controller my_controller;
+	
+	//TODO: autolocate ps3 device file
         fp = fopen("/dev/hidraw1", "r");
 	fread(buff, 49, 1, fp);
-	//my_controller = {
-	//	buff[3],buff[4],buff[5],buff[7],buff[8],buff[9],buff[10],
-	//	buff[15],buff[16],buff[17],buff[18],buff[19],buff[20],buff[21],buff[22],buff[23],
-	//	buff[24],buff[25],buff[26],buff[42],buff[44],buff[46],buff[48]
-	//};
-	//for (int n=0;n<40;n++) {
+	
 	while (1) {
 		fread(buff,49,1,fp);
-		setController(&my_controller,buff[3-1],buff[4-1],buff[5-1],buff[7-1],buff[8-1],buff[9-1],buff[10-1],
-                buff[15-1],buff[16-1],buff[17-1],buff[18-1],buff[19-1],buff[20-1],buff[21-1],buff[22-1],buff[23-1],
-                buff[24-1],buff[25-1],buff[26-1],buff[42-1],buff[44-1],buff[46-1],buff[48-1]);
+		setController(&my_controller,buff[2],buff[3],buff[4],buff[6],buff[7],buff[8],buff[9],
+                buff[14],buff[15],buff[16],buff[17],buff[18],buff[19],buff[20],buff[21],buff[22],
+                buff[23],buff[24],buff[25],buff[41],buff[43],buff[45],buff[47]);
 		printf("%3u \n",my_controller.upButton);
-		//for (int i=0;i<49;i++) {	
-			//printf("%x", buff[i+n*49] );
-			//printf("%3u ",my_controller.L2);
-		//}
-		//printf("\n");
 	}
 	printf("\n");
+	
+	//TODO: this probably never closes the file
 	fclose(fp);
 }
 
